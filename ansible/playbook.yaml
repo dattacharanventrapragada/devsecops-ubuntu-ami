@@ -1,0 +1,22 @@
+---
+
+- hosts: all localhost
+  gather_facts: true
+  become: yes
+
+# Below rules need to be disabled or the image building will fail
+  vars:
+    ubuntu1804cis_rule_1_1_2: false
+    ubuntu1804cis_rule_1_1_3: false 
+    ubuntu1804cis_rule_1_1_4: false
+    ubuntu1804cis_rule_1_1_5: false
+    ubuntu1804cis_rule_3_1_1: false
+    ubuntu1804cis_rule_3_3_2: false
+    ubuntu1804cis_rule_3_3_3: false
+    ubuntu1804cis_rule_3_5_1_1: false
+    ubuntu1804cis_rule_3_5_1_4: false
+    ubuntu1804cis_rule_3_5_2_1: false
+
+  roles:
+    - Ubuntu1804-CIS
+      

@@ -1,0 +1,83 @@
+{
+  "variables": {
+    "encrypted": "false",
+    "kms_key_id": "",
+    "source_ami_owners": "099720109477",
+    "source_ami_filter_name": "*ubuntu-jammy-22.04-*",
+    "arch": "x86_64",
+    "ssh_interface": "",
+    "ssh_username": "ubuntu",
+    "temporary_security_group_source_cidrs": "",
+    "associate_public_ip_address": "true",
+    "remote_folder": "",
+    "launch_block_device_mappings_volume_size": "10",
+    "ami_users": "",
+    "additional_yum_repos": ""
+  },
+
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{user `aws_region`}}",
+      "ami_users": "{{user `ami_users`}}",
+      "snapshot_users": "{{user `ami_users`}}",
+      "source_ami_filter": {
+        "filters": {
+          "name": "{{user `source_ami_filter_name`}}",
+          "architecture": "{{user `arch`}}",
+          "root-device-type": "ebs",
+          "state": "available",
+          "virtualization-type": "hvm"
+        },
+        "owners": [ "{{user `source_ami_owners`}}" ],
+        "most_recent": true
+      },
+      "instance_type": "{{user `instance_type`}}",
+     "ssh_username": "{{user `ssh_username`}}",
+      "ssh_interface": "{{user `ssh_interface`}}",
+      "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidrs`}}",
+      "security_group_id": "{{user `security_group_id`}}",
+      "associate_public_ip_address": "{{user `associate_public_ip_address`}}",
+      "ssh_pty": true,
+      "encrypt_boot": "{{user `encrypted`}}",
+      "kms_key_id": "{{user `kms_key_id`}}",
+      "run_tags": {
+          "creator": "{{user `creator`}}"
+      },
+      "subnet_id": "{{user `subnet_id`}}",
+      "tags": {
+          "Name": "{{user `ami_name`}}",
+          "created": "{{timestamp}}",
+          "source_ami_id": "{{ user `source_ami_id`}}"
+      },
+      "ami_name": "{{user `ami_name`}}",
+      "ami_description": "{{ user `ami_description` }}"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "remote_folder": "{{ user `remote_folder`}}",
+      "expect_disconnect": true,
+      "script": "{{template_dir}}/scripts/install_updates.sh"
+    },
+    {
+        "type": "ansible-local",
+        "playbook_file": "ansible/playbook.yaml",
+        "playbook_dir": "ansible"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    },
+    {
+      "type": "manifest",
+      "output": "{{user `ami_name`}}-manifest.json",
+      "strip_path": true
+    }
+  ]
+}
