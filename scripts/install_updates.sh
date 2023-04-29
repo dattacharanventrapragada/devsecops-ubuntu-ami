@@ -35,8 +35,8 @@ warn "sudo apt-get install -y /var/tmp/amazon-cloudwatch-agent.deb"
 echo 'Starting cloudwatch agent'
 warn "sudo amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/tmp/CWAgentParameters.json -s"
 
-echo 'Install Amazon Inspector'
-warn 'curl https://inspector-agent.amazonaws.com/linux/latest/install | sudo bash'
+# echo 'Install Amazon Inspector'
+# warn 'curl https://inspector-agent.amazonaws.com/linux/latest/install | sudo bash'
 
 ## Jenkins
 curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
