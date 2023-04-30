@@ -7,8 +7,8 @@ Step to deploy
 to build
 
 1. packer version
-2. packer validate ubuntu-hardened.json
-3. packer build ubuntu-hardened.json
+2. packer validate -var-file=packer-vars.json ubuntu-hardened.json
+3. packer build -var-file=packer-vars.json ubuntu-hardened.json
 4. packer validate -var-file=packer-vars.json ubuntu-hardened.json
 5. packer build -debug
 
