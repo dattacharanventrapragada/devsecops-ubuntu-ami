@@ -32,8 +32,8 @@ echo 'Downloading and installing amazon-cloudwatch-agent'
 warn "wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb -O /var/tmp/amazon-cloudwatch-agent.deb"
 warn "sudo apt-get install -y /var/tmp/amazon-cloudwatch-agent.deb"
 
-echo 'Starting cloudwatch agent'
-warn "sudo amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/tmp/CWAgentParameters.json -s"
+#echo 'Starting cloudwatch agent'
+#warn "sudo amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/tmp/CWAgentParameters.json -s"
 
 # echo 'Install Amazon Inspector'
 # warn 'curl https://inspector-agent.amazonaws.com/linux/latest/install | sudo bash'
