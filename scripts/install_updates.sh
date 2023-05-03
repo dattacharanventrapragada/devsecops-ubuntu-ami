@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
+   echo Waiting for other instances of apt to complete...
+   sleep 10
+done
+
 set -o pipefail
 set -o nounset
 set -o errexit
